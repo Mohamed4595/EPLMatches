@@ -1,0 +1,28 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "EPL Matches"
+include ':app'
+include ':core'
+include ':constants'
+include ':components'
+include ':splash'
+include ':splash:presentation'
+include ':matches'
+include ':matches:data'
+include ':matches:domain'
+include ':matches:interactors'
+include ':matches:presentation'
+include ':favouriteMatches'
+include ':favouriteMatches:presentation'

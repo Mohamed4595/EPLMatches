@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="matches">Matches</string>
+    <string name="no_result">No Result Found</string>
+    <string name="day_char">%1$d Day</string>
+    <string name="hour_char">%1$d H</string>
+    <string name="minute_char">%1$d M</string>
+    <string name="second_char">%1$d S</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="yesterday_at">\"Yesterday at \"</string>
+    <string name="matches_count">"Matches Count: "</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="mark_fixture_favorite">Mark a fixture as favorite</string>
+    <string name="favourites">Favourites</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    app theme -->
+    <color name="colorPrimary">#371d54</color>
+    <color name="colorPrimaryVariant">#371d54</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#E0D8F4</color>
+    <color name="colorSecondaryVariant">#33C9CEFF</color>
+    <color name="colorOnSecondary">#000000</color>
+
+    <color name="colorBackground">#FAF9FD</color>
+    <color name="colorOnBackground">#000000</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#606060</color>
+
+    <color name="colorBackgroundDark">#1B1C30</color>
+    <color name="colorOnBackgroundDark">#FFFFFF</color>
+    <color name="colorSurfaceDark">#26273B</color>
+    <color name="colorOnSurfaceDark">#C7C7CC</color>
+
+    <color name="colorError">#D32F2F</color>
+    <color name="colorOnError">#FFFFFF</color>
+
+    <color name="transparent">#00FFFFFF</color>
+
+</resources>
