@@ -60,6 +60,7 @@ fun MatchesListScreen(
                             iconColor = MaterialTheme.colors.onBackground
                         ) {
                             navigateToFavouriteScreen()
+
                         }
                     }
                 )
