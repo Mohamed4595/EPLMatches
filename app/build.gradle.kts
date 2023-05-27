@@ -18,7 +18,7 @@ android {
         targetSdk = Android.targetSdk
         versionCode = Android.versionCode
         versionName = Android.versionName
-        testInstrumentationRunner = "com.codingwithmitch.dotainfo.CustomTestRunner"
+        testInstrumentationRunner = "com.eplmatches.app.CustomTestRunner"
     }
 
     buildTypes {
@@ -57,6 +57,8 @@ dependencies {
     implementation(project(Modules.constants))
     implementation(project(Modules.splash))
 
+    implementation(project(Modules.matchesDomain))
+
     implementation(project(Modules.matchesData))
     implementation(project(Modules.matchesInteractors))
     implementation(project(Modules.matchesPresentation))
@@ -93,6 +95,12 @@ dependencies {
     kapt(Room.roomCompiler)
     implementation(Room.roomRuntime)
 
+    testImplementation(Google.truth)
+    testImplementation(Junit.junit4)
+    testImplementation(Ktor.ktorClientMock)
+    testImplementation(Ktor.clientSerialization)
+
+    androidTestImplementation(Google.truth)
     androidTestImplementation(AndroidXTest.runner)
     androidTestImplementation(ComposeTest.uiTestJunit4)
     debugImplementation(ComposeTest.uiTestManifest)

@@ -13,12 +13,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import com.matches.presentation.ui.MatchesListEvents
 import com.matches.presentation.ui.model.UiMatchModel
 import com.mhmd.components.AppBarDivider
 import com.mhmd.components.IconButton
+import com.mhmd.core.util.TestTags
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -47,7 +49,10 @@ fun MatchContent(
                 ScoreContent(it.matchModel.score)
                 MatchTime(it.matchModel.date, it.matchModel.score)
                 if (isFavouriteView)
-                    IconButton(iconRes = if (it.isFavourite) com.mhmd.components.R.drawable.ic_heart_filled else com.mhmd.components.R.drawable.ic_heart_outlined) {
+                    IconButton(
+                        modifier = Modifier.testTag(TestTags.FAVOURITE_LIST_BUTTON),
+                        iconRes = if (it.isFavourite) com.mhmd.components.R.drawable.ic_heart_filled else com.mhmd.components.R.drawable.ic_heart_outlined
+                    ) {
                         events(MatchesListEvents.OnMakeFavourite(it))
                     }
             }
