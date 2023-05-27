@@ -13,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = Android.minSdk
-        testInstrumentationRunner = "com.codingwithmitch.dotainfo.CustomTestRunner"
     }
     @Suppress("UnstableApiUsage")
     buildFeatures {

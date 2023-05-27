@@ -9,7 +9,7 @@ import com.mhmd.core.domain.UIComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetMatches(private val service: MatchesService) {
+class GetRemoteMatches(private val service: MatchesService) {
 
     fun execute(): Flow<DataState<List<MatchModel>>> =
         flow {
@@ -34,6 +34,16 @@ class GetMatches(private val service: MatchesService) {
 
                     is ApiResponse.Success -> {
                         emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
+                        if(result.data == null)
+                            emit(
+                                DataState.Error(
+                                    uiComponent = UIComponent.Dialog(
+                                        title = "Network Data Error",
+                                        description = "null data"
+                                    )
+                                )
+                            )
+                            else
                         emit(DataState.Success(result.data))
                     }
                 }

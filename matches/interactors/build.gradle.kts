@@ -12,8 +12,4 @@ dependencies {
     "implementation"(project(Modules.matchesDomain))
 
     "implementation"(Kotlinx.coroutinesCore) // need for flows
-
-    "testImplementation"(Junit.junit4)
-    "testImplementation"(Ktor.ktorClientMock)
-    "testImplementation"(Ktor.clientSerialization)
 }

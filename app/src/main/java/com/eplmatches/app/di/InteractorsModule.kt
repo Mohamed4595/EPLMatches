@@ -4,7 +4,7 @@ import com.matches.data.cach.MatchDao
 import com.matches.data.network.MatchesService
 import com.matches.interactors.DeleteMatch
 import com.matches.interactors.GetLocalMatches
-import com.matches.interactors.GetMatches
+import com.matches.interactors.GetRemoteMatches
 import com.matches.interactors.InsertMatch
 import dagger.Module
 import dagger.Provides
@@ -20,8 +20,8 @@ object InteractorsModule {
     @Provides
     fun provideMatches(
         service: MatchesService
-    ): GetMatches {
-        return GetMatches(
+    ): GetRemoteMatches {
+        return GetRemoteMatches(
             service = service
         )
     }

@@ -6,9 +6,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.matches.domain.MatchModel
 import com.matches.interactors.DeleteMatch
 import com.matches.interactors.GetLocalMatches
-import com.matches.interactors.GetMatches
+import com.matches.interactors.GetRemoteMatches
 import com.matches.interactors.InsertMatch
 import com.matches.presentation.ui.model.UiMatchModel
 import com.mhmd.core.domain.DataState
@@ -27,7 +28,7 @@ import javax.inject.Inject
 class MatchesListViewModel
 @Inject
 constructor(
-    private val remoteMatches: GetMatches,
+    private val remoteMatches: GetRemoteMatches,
     private val insertMatch: InsertMatch,
     private val getLocalMatches: GetLocalMatches,
     private val deleteMatch: DeleteMatch
@@ -144,30 +145,9 @@ constructor(
                     }
 
                     is DataState.Success -> {
-                        val map: MutableMap<LocalDate, List<UiMatchModel>> = mutableMapOf()
 
-                        dataState.data?.forEach { match ->
-                            val list = map[match.date?.toLocalDate()]
-                            match.date?.let { date ->
-                                val newItem = UiMatchModel(
-                                    matchModel = match,
-                                    isFavourite = false
-                                )
-                                if (list == null) {
-                                    map[date.toLocalDate()] = listOf(
-                                        newItem
-                                    )
-                                } else {
-                                    val newList = list.toMutableList()
-                                    newList.add(newItem)
+                        val map = dataState.data?.toMatchesMap() ?: emptyMap()
 
-                                    match.date?.let { matchDate ->
-                                        map[matchDate.toLocalDate()] = newList
-                                    }
-                                }
-
-                            }
-                        }
                         val selectedDay =
                             if (map[LocalDate.now()].isNullOrEmpty()) LocalDate.now()
                                 .plusDays(1)
@@ -214,13 +194,13 @@ constructor(
                         localMatches.find { localMatch ->
                             match.matchModel.id == localMatch.id
                         }
-                         val newItem = UiMatchModel(
-                            matchModel = match.matchModel,
-                            isFavourite = checkIsFound != null
-                        )
+                    val newItem = UiMatchModel(
+                        matchModel = match.matchModel,
+                        isFavourite = checkIsFound != null
+                    )
 
-                        val index = list.indexOf(match)
-                        list[index] = newItem
+                    val index = list.indexOf(match)
+                    list[index] = newItem
 
                 }
                 map[date] = list?.toList() ?: emptyList()
@@ -282,4 +262,33 @@ constructor(
         }
 
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun List<MatchModel>?.toMatchesMap(): MutableMap<LocalDate, List<UiMatchModel>> {
+    val map: MutableMap<LocalDate, List<UiMatchModel>> = mutableMapOf()
+
+    this?.forEach { match ->
+        val list = map[match.date?.toLocalDate()]
+        match.date?.let { date ->
+            val newItem = UiMatchModel(
+                matchModel = match,
+                isFavourite = false
+            )
+            if (list == null) {
+                map[date.toLocalDate()] = listOf(
+                    newItem
+                )
+            } else {
+                val newList = list.toMutableList()
+                newList.add(newItem)
+
+                match.date?.let { matchDate ->
+                    map[matchDate.toLocalDate()] = newList
+                }
+            }
+
+        }
+    }
+    return map
 }

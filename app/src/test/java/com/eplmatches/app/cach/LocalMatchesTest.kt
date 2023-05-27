@@ -1,4 +1,4 @@
-package com.eplmatches.app
+package com.eplmatches.app.cach
 
 import com.google.common.truth.Truth.assertThat
 import com.matches.domain.MatchModel
@@ -10,6 +10,7 @@ import com.matches.interactors.GetLocalMatches
 import com.matches.interactors.InsertMatch
 import com.mhmd.core.domain.DataState
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -58,15 +59,13 @@ class LocalMatchesTest {
                 )
             )
         )
-        val result = insertMatch.execute(matchesToInsert)
+        // Execute the use-case
+        val emissions = insertMatch.execute(matchesToInsert).toList()
 
-        result.collectLatest {
-            when (it) {
-                is DataState.Error -> assertThat(false).isTrue()
-                is DataState.Loading -> assertThat(true).isTrue()
-                is DataState.Success -> assertThat(it.data).isTrue()
-            }
-        }
+        // Confirm second emission is data
+        assertThat(emissions[0] is DataState.Success).isTrue()
+        assertThat((emissions[0] as DataState.Success).data ?: false).isTrue()
+
     }
 
     @Test
@@ -96,15 +95,13 @@ class LocalMatchesTest {
                 )
             )
         )
-        val result = insertMatch.execute(matchesToInsert)
+        // Execute the use-case
+        val emissions = insertMatch.execute(matchesToInsert).toList()
 
-        result.collectLatest {
-            when (it) {
-                is DataState.Error -> assertThat(false).isTrue()
-                is DataState.Loading -> assertThat(true).isTrue()
-                is DataState.Success -> assertThat(it.data).isFalse()
-            }
-        }
+        // Confirm second emission is data
+        assertThat(emissions[0] is DataState.Success).isTrue()
+        assertThat((emissions[0] as DataState.Success).data ?: false).isFalse()
+
     }
 
     @Test
@@ -121,25 +118,21 @@ class LocalMatchesTest {
 
     @Test
     fun `Delete Match`() = runBlocking {
-        val result = deleteMatch.execute(2)
-        result.collectLatest {
-            when (it) {
-                is DataState.Error -> assertThat(false).isTrue()
-                is DataState.Loading -> assertThat(true).isTrue()
-                is DataState.Success -> assertThat(it.data).isTrue()
-            }
-        }
+        // Execute the use-case
+        val emissions = deleteMatch.execute(2).toList()
+
+        // Confirm second emission is data
+        assertThat(emissions[0] is DataState.Success).isTrue()
+        assertThat((emissions[0] as DataState.Success).data ?: false).isTrue()
     }
 
     @Test
     fun `Delete Not Existing Match`() = runBlocking {
-        val result = deleteMatch.execute(3)
-        result.collectLatest {
-            when (it) {
-                is DataState.Error -> assertThat(false).isTrue()
-                is DataState.Loading -> assertThat(true).isTrue()
-                is DataState.Success -> assertThat(it.data).isFalse()
-            }
-        }
+        // Execute the use-case
+        val emissions = deleteMatch.execute(3).toList()
+
+        // Confirm second emission is data
+        assertThat(emissions[0] is DataState.Success).isTrue()
+        assertThat((emissions[0] as DataState.Success).data ?: false).isFalse()
     }
 }
